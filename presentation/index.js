@@ -10,8 +10,6 @@ import {
   Image,
   List,
   ListItem,
-  Notes,
-  Quote,
   Slide,
   Text,
   Appear,
@@ -35,7 +33,16 @@ const images = {
   kittiesbreed: require('../assets/kittiesbreed.gif'),
   erc721interface: require('../assets/erc721interface.jpg'),
   erc721metadata: require('../assets/erc721metadata.jpg'),
-  erc721enum: require('../assets/erc721enum.jpg')
+  erc721enum: require('../assets/erc721enum.jpg'),
+  constructor: require('../assets/constructor.jpg'),
+  getterfunctions: require('../assets/getterfunctions.jpg'),
+  mintfunc: require('../assets/mintfunc.jpg'),
+  burnfunc: require('../assets/burnfunc.jpg'),
+  sampletoken: require('../assets/sampletoken.jpg'),
+  getnexttokenid: require('../assets/getnexttokenid.jpg'),
+  projectsusingnft: require('../assets/projectsusingnft.jpg'),
+  thankyou: require('../assets/thankyou.gif'),
+  eth: require('../assets/eth.gif')
 
 };
 
@@ -112,6 +119,27 @@ ERC721 is important for a number of reasons, particularly because of the new use
 </p>
 `;
 
+const tokenchars = `
+<p>
+Ownership 
+When you buy ERC-20 tokens, your rights of ownership will be written in the smart contracts. The smart contract also has data of how much tokens each and every address will have after the deal…and that’s it. The thing is that these contracts don’t need to worry about specific tokens because they are fungible, so they are all the same.
+However, the value of one ERC-721 token is not the same as another ERC-721 token because of its non-fungibility. Adding an address and balance to the contract won’t be enough, a token’s unique ownership details also need to be added.
+</p>
+<p>
+Creation 
+Since each individual token is unique, we must create each individual token. With ERC20, we can easy create a batch of 100 more by adding to the totalSupply_. However, since we maintain an array of tokens in an ERC721 standard, we need to add each token to that array separately.
+</p>
+<p>
+Transfer & Allowance
+When we want another contract or address to be able to transfer our tokens, we need to allow the use the contract address to do that for us — this need arises in many instances in distributed applications — escrows, games, auctions, etc. Hence, we need a way to approve other address to spend our tokens. Then, another transfer function requires the contract to check the allowance of who is allowed to spend them. 
+After checking the sender and receiver addresses are valid, the clearApproval() function is used to remove the approval of the transfer from the original owner of the token, so that a previously approved spender may not continue to transfer the token. As before the transferFrom() function is used to remove token ownership from the _from address and add token ownership to the _to address.
+</p>
+<p>
+Burning
+For ERC721 tokens, we need to ensure that the specific token id or index is eliminated. First, we clearApproval(), then remove the token from ownership via removeTokenFrom() and use the Transfer event to alert this change on the front end. Next, we eliminate the metadata associated with that token by deleting what is mapped to that particular token index. Lastly, much like removing a token from ownership, we rearrange our allTokens array so that we replace the _tokenId index with the last token in the array.
+</p>
+`;
+
 const erc721interface = `
 <p>
 ERC721 standard is the most popular and recognized implementation of a NFT. ERC721 is an EIP (Ethereum Improvement Proposal) which was proposed by developers of Ethereum, and it became one of ERCs (Ethereum Request for Comment) after it was passed by the Ethereum committee. The official introduction of ERC721 is: A standard interface for non-fungible tokens, also known as deeds.
@@ -155,6 +183,50 @@ As with many common smart contract patterns, the Zeppelin team has released an a
 </p>
 `;
 
+const metadata = `
+<p>
+In order to set a token’s URI data, the following _setTokenURI() function is also included. Here using the token Id that you created via _mint() and your desired URI information, you can set the data that is mapped to a token ID in tokenURIs. Note the requirement in this function that we determine that a token Id exists (meaning someone owns it) prior to assigning data.
+</p>
+`;
+
+const createtoken = `
+<p>
+In order to keep the token IDs simple and sequential, an internal function _getNextTokenId() counts the current token supply (using the totalSupply getter) and adds 1. This is then used in the internal _mint function as the tokenId. Next, the metadata URI (if provided) is set using the _setTokenURI function and the newly created tokenId.
+</p>
+`;
+
+const future = `
+<p>
+As the more practical uses of blockchain technology emerge and blockchain getting main-stream, you can expect more people tokenizing their digital as well as tangible assets on the blockchain. NFTs are a perfect fit for this use case.
+</p>
+`;
+
+const usecases = `
+<p>
+Non-fungible tokens are in practical sense, title deeds to any property or certificate. The token doesn't define whether the property or certificate is digital or physical - or civil - in nature. It is up to the user to choose and define the practical use of the non-fungible token.
+</p>
+`;
+
+const artgallery = `
+<p>
+An art gallery hosts a marketplace for paintings. The platform of the art gallery transfers ownership of the paintings to the customer, governed by a licensing contract set by the artist. Each painting is represented by a non-fungible token, encoded within the artwork itself.
+</p>
+<p>
+The non-fungible token and the sales contract(s) associated with it provide the artist means of copyright and licensing in the digital world, and fine artists means of distinguishing their original artwork from forgery.
+</p>
+<p>
+The non-fungible token provide the gallerist means to prove that their hosted artwork is indeed authentic, as well as means of offering custom contracts such as renting, licensing, exhibitions and direct sales. The non-fungible token provides the customer proof of authenticity and flexible deals on fine art both in collection and commerce.
+</p>
+`;
+
+const conclusion = `
+<p>
+Non-fungible tokens may transform our society in ways never seen before since the invention of the printing press, by taking out the middleman in business contracts and bureaucracy.
+Many if not most tasks today delegated to public servants, accountants, secretaries, commercial agents and opaque middlemen can be automated with a transparent, trustless system. This new method will liberate us from boring tasks and uncertainty in many aspects of modern life.
+</p>
+`;
+
+
 export default class Presentation extends React.Component {
   render() {
     return (
@@ -164,6 +236,7 @@ export default class Presentation extends React.Component {
         theme={theme}
       >
         <Slide transition={['zoom']} bgColor="primary">
+          <Image src={images.eth} />
           <Heading size={1} caps lineHeight={1} textColor="secondary">
           ERC721 Primer
           </Heading>
@@ -182,7 +255,7 @@ export default class Presentation extends React.Component {
             <Cite margin="10px 0 0 30px">Merriam-Webster</Cite>
           </BlockQuote>
         </Slide>
-        <Slide notes={fungibilityExample} transition={['fade']} bgColor="tertiary">
+        <Slide notes={fungibilityExample} transition={['spin', 'slide']} bgColor="tertiary">
           <Heading size={1} textColor="primary" caps>
             Example
           </Heading>
@@ -197,7 +270,7 @@ export default class Presentation extends React.Component {
             </Fill>
           </Layout>
         </Slide>
-        <Slide notes={tokenExamples} transition={['fade']} bgColor="primary" textColor="secondary">
+        <Slide notes={tokenExamples} transition={['spin', 'slide']} bgColor="primary" textColor="secondary">
           <Heading size={6} textColor="secondary" caps>
           But what does this have to do with Ethereum?
           </Heading>
@@ -238,10 +311,13 @@ export default class Presentation extends React.Component {
           </Heading>
           <Image height={400} src={images.cryptokitties} />
         </Slide>
-        <Slide notes={breedkitties} transition={['fade']} bgColor="secondary" textColor="tertiary">
+        <Slide notes={breedkitties} bgColor="secondary" textColor="tertiary">
+          <Heading size={3} textColor="tertiary" caps>
+          CryptoKitties
+          </Heading>
           <Image src={images.kittiesbreed} />
         </Slide>
-        <Slide transition={['zoom']} bgColor="primary" textColor="tertiary">
+        <Slide notes={tokenchars} transition={['zoom']} bgColor="primary" textColor="tertiary">
           <Heading size={5} textColor="secondary" caps>
           Token standards primarily stipulate the following characteristics about a token:
           </Heading>
@@ -258,11 +334,14 @@ export default class Presentation extends React.Component {
           </Heading>
           <Image src={images.erc721interface} />
         </Slide>
-        <Slide notes={ercmetadata} transition={['fade']} bgColor="secondary" textColor="tertiary">
+        <Slide notes={ercmetadata} transition={['fade', 'zoom']} bgColor="secondary" textColor="tertiary">
+          <Heading size={5} textColor="tertiary" caps>
+          The ERC721 Non Fungible Token Standard
+          </Heading>
           <Image src={images.erc721metadata} />
           <Image src={images.erc721enum} />
         </Slide>
-        <Slide notes={openzeppelin} transition={['fade']} bgColor="tertiary" textColor="primary">
+        <Slide notes={openzeppelin} transition={['spin', 'slide']} bgColor="tertiary" textColor="primary">
           <Heading size={6} textColor="secondary" caps>
             OpenZeppelin Implementation
           </Heading>
@@ -275,13 +354,120 @@ export default class Presentation extends React.Component {
             <Appear><ListItem textSize={25}><Text textSize={25} bold>ERC721.sol</Text> Packages the optional metadata and enumerable extensions for use in ERC721Token.sol</ListItem></Appear>
             <Appear><ListItem textSize={25}><Text textSize={25} bold>ERC721Token.sol</Text> This is the full implementation of the standard, and what we will be focusing on.</ListItem></Appear>
           </List>
-          {/* <Image src={images.kittiesbreed} /> */}
         </Slide>
-        <Slide notes={breedkitties} transition={['fade']} bgColor="secondary" textColor="tertiary">
-          {/* <Image src={images.kittiesbreed} /> */}
+        <Slide transition={['spin', 'slide']} bgColor="secondary" textColor="tertiary">
+          <Heading margin="0 0 50px 0" size={6} textColor="primary" caps>
+            Most Relevant Functions
+          </Heading>
+          <Appear>
+            <Text textColor="tertiary">
+            Set the name and symbol of the contract
+            </Text>
+          </Appear>
+          <Appear>
+            <Image src={images.constructor} />
+          </Appear>
+          <Appear>
+            <Text textColor="tertiary">
+            Getter
+            </Text>
+          </Appear>
+          <Appear>
+            <Image src={images.getterfunctions} />
+          </Appear>
         </Slide>
-        <Slide notes={breedkitties} transition={['fade']} bgColor="secondary" textColor="tertiary">
-          {/* <Image src={images.kittiesbreed} /> */}
+        <Slide transition={['spin', 'slide']} bgColor="secondary" textColor="tertiary">
+          <Heading margin="0 0 50px 0" size={6} textColor="primary" caps>
+            Most Relevant Functions
+          </Heading>
+          <Appear>
+            <Text textColor="tertiary">
+            Mint - Creates a new token with a given Id (reverts if this Id already exists) and transfers to a given address
+            </Text>
+          </Appear>
+          <Appear>
+            <Image src={images.mintfunc} />
+          </Appear>
+          <Appear>
+            <Text textColor="tertiary">
+            Burn - Removes from circulation
+            </Text>
+          </Appear>
+          <Appear>
+            <Image src={images.burnfunc} />
+          </Appear>
+        </Slide>
+        <Slide notes={metadata} transition={['fade']} bgColor="secondary" textColor="tertiary">
+          <Heading margin="0 0 50px 0" size={6} textColor="primary" caps>
+            Metadata
+          </Heading>
+          <Appear>
+            <Text textColor="tertiary">
+              Metadata is crucial to the vast majority of NFTs, as it gives the token it's unique attributes. In CryptoKitties for instance, this can be the name of the cat, it's “cattributes”, and other useful information.
+            </Text>
+          </Appear>
+        </Slide>
+        <Slide note={createtoken} transition={['fade']} bgColor="secondary" textColor="tertiary">
+          <Heading margin="0 0 20px 0" size={6} textColor="primary" caps>
+        Creating a token
+          </Heading>
+          <Appear>
+            <Image src={images.sampletoken} />
+          </Appear>
+        </Slide>
+        <Slide notes={future} transition={['fade']} bgColor="primary" textColor="tertiary">
+          <Heading margin="0 0 20px 0" size={6} textColor="tertiary" caps>
+          The Future of Non Fungible Tokens
+          </Heading>
+          <Image src={images.projectsusingnft} />
+        </Slide>
+        <Slide notes={usecases} transition={['fade']} bgColor="primary" textColor="tertiary">
+          <Heading margin="0 0 20px 0" size={6} textColor="tertiary" caps>
+          The Future of Non Fungible Tokens
+          </Heading>
+          <Appear>
+            <Text textColor="tertiary">
+            Automating business contracts
+            </Text>
+          </Appear>
+          <List>
+            <Appear><ListItem>Proof of Origin</ListItem></Appear>
+            <Appear><ListItem>Proof of Ownership</ListItem></Appear>
+            <Appear><ListItem>Proof of Authenticity</ListItem></Appear>
+            <Appear><ListItem>Licensing and Royalties</ListItem></Appear>
+            <Appear><ListItem>KYC/AML</ListItem></Appear>
+            <Appear><ListItem>Supply Chain Management</ListItem></Appear>
+            <Appear><ListItem>Legal Contracts</ListItem></Appear>
+            <Appear><ListItem>Leasing and Renting, Subscriptions</ListItem></Appear>
+          </List>
+        </Slide>
+        <Slide notes={artgallery} transition={['fade']} bgColor="primary" textColor="tertiary">
+          <Heading margin="0 0 20px 0" size={6} textColor="tertiary" caps>
+          The Future of Non Fungible Tokens
+          </Heading>
+          <Appear>
+            <Text textColor="tertiary">
+            Art Gallery
+            </Text>
+          </Appear>
+          <List>
+            <Appear><ListItem>The origin of the work, or who painted it</ListItem></Appear>
+            <Appear><ListItem>The current owner</ListItem></Appear>
+            <Appear><ListItem>The licensing contract and whether the conditions are met</ListItem></Appear>
+            <Appear><ListItem>Relevant information about the artwork</ListItem></Appear>
+            <Appear><ListItem>The sales contract(s) associated with the token</ListItem></Appear>
+          </List>
+        </Slide>
+        <Slide notes={conclusion} transition={['fade']} bgColor="primary" textColor="tertiary">
+          <Heading margin="0 0 20px 0" size={6} textColor="tertiary" caps>
+              Conclusion
+          </Heading>
+          <Text textColor="tertiary">
+              The transition will be rapid, once the foundation is laid.
+          </Text>
+          <Appear>
+            <Image src={images.thankyou} />
+          </Appear>
         </Slide>
       </Deck>
     );
